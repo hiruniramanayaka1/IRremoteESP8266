@@ -25,6 +25,11 @@ jobs:
       MAKEFLAGS: "-j 2"
     steps:
     - uses: actions/checkout@v2
+    - name: Cache Google Test dependency
+      uses: actions/cache@v4
+      with:
+        path: lib/googletest
+        key: ${{ runner.os }}-googletest-${{ hashFiles('test/Makefile') }}
     - name: Install the Google test suite
       run: (cd test; make install-googletest)
     - name: Build base unit test
